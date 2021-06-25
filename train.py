@@ -23,7 +23,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--config', type=str, default='configs/male2female.yaml', help='Path to the config file.')
 parser.add_argument('--output_path', type=str, default='./', help="outputs path")
 parser.add_argument("--resume", action="store_true")
-parser.add_argument('--trainer', type=str, default='aclgan', help="aclgan")
+parser.add_argument('--trainer', type=str, default='aclgan', help="aclgan, hdencode")
 opts = parser.parse_args()
 
 cudnn.benchmark = True
@@ -37,6 +37,8 @@ config['vgg_model_path'] = opts.output_path
 # Setup model and data loader
 if opts.trainer == 'aclgan':
     trainer = aclgan_Trainer(config)
+elif opts.trainer == 'hdencode':
+    trainer = hdencode_Trainer(config)
 else:
     sys.exit("Only support aclgan")
 trainer.cuda()
